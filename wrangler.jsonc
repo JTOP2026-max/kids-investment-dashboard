@@ -1,9 +1,18 @@
 {
   "$schema": "./node_modules/wrangler/config-schema.json",
   "name": "kids-investment-dashboard",
+  "main": "worker.js",
   "compatibility_date": "2026-08-19",
+  "compatibility_flags": ["nodejs_compat"],
   "assets": {
     "directory": ".",
-    "html_handling": "auto-trailing-slash"
+    "html_handling": "auto-trailing-slash",
+    "run_worker_first": ["/api/*"]
+  },
+  "observability": {
+    "enabled": true,
+    "logs": {
+      "head_sampling_rate": 1
+    }
   }
 }
