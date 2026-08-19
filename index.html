@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="theme-color" content="#f6f7fb" />
+  <title>我的投資小金庫</title>
+  <style>
+    :root{--bg:#f5f7fb;--card:#fff;--text:#172033;--muted:#6b7280;--line:#e5e7eb;--brand:#2563eb;--brand2:#eff6ff;--up:#d92d20;--down:#07883f;--flat:#667085;--shadow:0 8px 24px rgba(15,23,42,.06);--r:18px}
+    *{box-sizing:border-box} body{margin:0;background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","Noto Sans TC",Roboto,Arial,sans-serif}
+    button,input,select{font:inherit}.wrap{max-width:1180px;margin:auto;padding:18px 16px 48px}.topbar{display:flex;gap:14px;align-items:center;justify-content:space-between;margin-bottom:14px;flex-wrap:wrap}.title h1{font-size:26px;margin:0 0 4px}.title p{margin:0;color:var(--muted);font-size:14px}.actions{display:flex;gap:8px;align-items:center}.btn{border:1px solid var(--line);background:#fff;color:var(--text);padding:10px 13px;border-radius:12px;cursor:pointer;font-weight:600}.btn.primary{border-color:var(--brand);background:var(--brand);color:#fff}.status{display:flex;gap:8px;align-items:center;color:var(--muted);font-size:13px}.dot{width:9px;height:9px;border-radius:50%;background:#98a2b3}.dot.live{background:#16a34a;box-shadow:0 0 0 4px rgba(22,163,74,.12)}.dot.demo{background:#f59e0b}
+    .hero{display:grid;grid-template-columns:1.35fr .65fr;gap:14px}.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);box-shadow:var(--shadow);padding:18px}.eyebrow{font-size:13px;color:var(--muted);margin-bottom:7px}.big{font-size:38px;font-weight:800;letter-spacing:-1px}.subrow{display:flex;gap:18px;flex-wrap:wrap;margin-top:12px}.metric b{font-size:19px}.metric span{display:block;color:var(--muted);font-size:12px;margin-bottom:3px}.up{color:var(--up)!important}.down{color:var(--down)!important}.flat{color:var(--flat)!important}.market-name{font-size:15px;font-weight:700}.market-value{font-size:30px;font-weight:800;margin:8px 0}.badge{display:inline-flex;align-items:center;padding:5px 9px;border-radius:999px;font-size:12px;font-weight:700;background:#f2f4f7;color:#475467}.badge.win{background:#fff1f0;color:var(--up)}.badge.lose{background:#ecfdf3;color:var(--down)}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:14px}.mini{padding:15px}.mini .v{font-size:23px;font-weight:800;margin-top:5px}.mini .k{font-size:12px;color:var(--muted)}
+    .section{margin-top:16px}.section-head{display:flex;justify-content:space-between;align-items:end;gap:12px;margin-bottom:9px}.section h2{font-size:18px;margin:0}.section p{font-size:13px;color:var(--muted);margin:3px 0 0}.table-wrap{overflow:auto}.holdings{width:100%;border-collapse:collapse;min-width:820px}.holdings th,.holdings td{padding:13px 11px;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}.holdings th{font-size:12px;color:var(--muted);font-weight:600;background:#fafafa}.holdings th:first-child,.holdings td:first-child{text-align:left}.stock{display:flex;gap:10px;align-items:center}.ticker{width:40px;height:40px;border-radius:11px;background:var(--brand2);color:var(--brand);display:grid;place-items:center;font-weight:800;font-size:12px}.stock-name b{display:block}.stock-name small{color:var(--muted)}
+    .bar{height:8px;background:#eef2f6;border-radius:999px;overflow:hidden;margin-top:7px}.bar span{display:block;height:100%;background:var(--brand);border-radius:999px}.tip{display:flex;gap:12px;align-items:flex-start}.tip-icon{width:38px;height:38px;border-radius:12px;background:#fff7ed;display:grid;place-items:center;font-size:20px}.tip h3{font-size:15px;margin:0 0 5px}.tip p{margin:0;color:#475467;line-height:1.7;font-size:14px}.footer-note{color:var(--muted);font-size:12px;line-height:1.6;margin-top:16px;text-align:center}
+    dialog{border:0;border-radius:18px;padding:0;max-width:720px;width:calc(100% - 24px);box-shadow:0 24px 70px rgba(0,0,0,.22)}dialog::backdrop{background:rgba(15,23,42,.4)}.modal{padding:20px}.modal h2{margin:0 0 4px}.modal .desc{margin:0 0 16px;color:var(--muted);font-size:13px}.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}.field label{display:block;font-size:12px;color:var(--muted);margin:0 0 5px}.field input,.field select{width:100%;border:1px solid var(--line);border-radius:11px;padding:10px;background:#fff}.portfolio-list{margin-top:14px;border-top:1px solid var(--line)}.edit-row{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line)}.edit-row small{color:var(--muted)}.danger{color:#b42318;background:#fff;border:1px solid #fecdca}.modal-actions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}
+    @media(max-width:850px){.hero{grid-template-columns:1fr}.grid4{grid-template-columns:1fr 1fr}.big{font-size:34px}}@media(max-width:520px){.wrap{padding:14px 12px 36px}.title h1{font-size:22px}.actions{width:100%}.actions .btn{flex:1}.grid4{grid-template-columns:1fr 1fr}.card{padding:15px}.big{font-size:31px}.form-grid{grid-template-columns:1fr}.status{width:100%;justify-content:space-between}}
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <div class="topbar">
+    <div class="title"><h1>📈 我的投資小金庫</h1><p>只看資產與學習投資，不提供下單功能</p></div>
+    <div class="actions"><button class="btn" id="editBtn">管理持股</button><button class="btn primary" id="refreshBtn">立即更新</button></div>
+    <div class="status"><span><i class="dot demo" id="statusDot"></i> <span id="statusText">準備更新</span></span><span id="updateClock">--:--:--</span><span id="countdown">10 秒後更新</span></div>
+  </div>
+
+  <div class="hero">
+    <section class="card">
+      <div class="eyebrow">我的總資產</div><div class="big" id="totalValue">NT$ --</div>
+      <div class="subrow">
+        <div class="metric"><span>累計投入</span><b id="totalCost">NT$ --</b></div>
+        <div class="metric"><span>累計損益</span><b id="totalPnL">--</b></div>
+        <div class="metric"><span>總報酬率</span><b id="totalReturn">--</b></div>
+      </div>
+    </section>
+    <section class="card">
+      <div class="market-name">🇹🇼 台灣加權指數</div><div class="market-value" id="marketValue">--</div><div id="marketChange" class="flat">--</div>
+      <div style="margin-top:13px"><span class="badge" id="vsBadge">等待行情</span></div>
+    </section>
+  </div>
+
+  <div class="grid4">
+    <div class="card mini"><div class="k">今日資產變化</div><div class="v" id="dayPnL">--</div></div>
+    <div class="card mini"><div class="k">今日我的績效</div><div class="v" id="dayReturn">--</div></div>
+    <div class="card mini"><div class="k">今日大盤績效</div><div class="v" id="marketReturn">--</div></div>
+    <div class="card mini"><div class="k">目前持股檔數</div><div class="v" id="stockCount">--</div></div>
+  </div>
+
+  <section class="section card">
+    <div class="section-head"><div><h2>我的持股</h2><p>成本、目前市值、損益一次看懂</p></div></div>
+    <div class="table-wrap"><table class="holdings"><thead><tr><th>股票</th><th>股數</th><th>平均成本</th><th>目前價格</th><th>今日漲跌</th><th>市值</th><th>累計損益</th><th>報酬率</th></tr></thead><tbody id="holdingRows"></tbody></table></div>
+  </section>
+
+  <section class="section card tip"><div class="tip-icon">💡</div><div><h3>今天的投資小教室</h3><p id="lesson">投資不是每天都要贏。先學會看「成本、報酬率、與大盤比較」，比只看今天紅或綠更重要。</p></div></section>
+  <div class="footer-note">本頁為家庭投資教育與資產追蹤工具，不是券商交易平台。盤中行情會嘗試每 10 秒更新；若免費來源無法連線，畫面會明確顯示「展示資料」，不會假裝成即時行情。</div>
+</div>
+
+<dialog id="portfolioDialog"><div class="modal"><h2>管理持股</h2><p class="desc">新增股票代號、持有股數與平均成本。資料只儲存在這台裝置的瀏覽器。</p>
+  <div class="form-grid">
+    <div class="field"><label for="code">股票代號</label><input id="code" placeholder="例如 0050、2330" inputmode="numeric"></div>
+    <div class="field"><label for="name">名稱</label><input id="name" placeholder="例如 元大台灣50"></div>
+    <div class="field"><label for="shares">持有股數</label><input id="shares" type="number" min="0" step="1" placeholder="1000"></div>
+    <div class="field"><label for="avgCost">平均成本</label><input id="avgCost" type="number" min="0" step="0.01" placeholder="52.30"></div>
+    <div class="field"><label for="exchange">市場</label><select id="exchange"><option value="tse">上市</option><option value="otc">上櫃</option></select></div>
+    <div class="field" style="display:flex;align-items:end"><button class="btn primary" id="addHolding" style="width:100%">新增持股</button></div>
+  </div>
+  <div class="portfolio-list" id="portfolioList"></div>
+  <div class="modal-actions"><button class="btn" id="resetDemo">恢復示範持股</button><button class="btn primary" id="closeDialog">完成</button></div>
+</div></dialog>
+
+<script>
+const REFRESH_SECONDS=10;
+const demoHoldings=[
+  {code:'0050',name:'元大台灣50',shares:1000,avgCost:52.30,exchange:'tse',demoPrice:68.50,demoPrev:67.90},
+  {code:'2330',name:'台積電',shares:100,avgCost:980,exchange:'tse',demoPrice:1120,demoPrev:1110},
+  {code:'2881',name:'富邦金',shares:500,avgCost:78.20,exchange:'tse',demoPrice:84.30,demoPrev:83.70}
+];
+let holdings=JSON.parse(localStorage.getItem('kidPortfolio')||'null')||demoHoldings;
+let quotes={}, market={price:23845.31,prev:23690.12,source:'demo'}, left=REFRESH_SECONDS;
+const $=id=>document.getElementById(id); const money=n=>'NT$ '+Math.round(n).toLocaleString('zh-TW'); const num=n=>Number(n).toLocaleString('zh-TW',{maximumFractionDigits:2}); const pct=n=>(n>=0?'+':'')+n.toFixed(2)+'%';
+function cls(v){return v>0?'up':v<0?'down':'flat'}
+function save(){localStorage.setItem('kidPortfolio',JSON.stringify(holdings));renderEditor();refreshQuotes()}
+function cleanPrice(v){ if(v===undefined||v===null) return NaN; const s=String(v).trim(); if(!s||s==='-')return NaN; return Number(s.replace(/,/g,'')); }
+async function fetchTwse(){
+  if(!holdings.length) throw new Error('no holdings');
+  const channels=holdings.map(h=>`${h.exchange}_${h.code}.tw`).concat(['tse_t00.tw']).join('|');
+  const url=`https://mis.twse.com.tw/stock/api/getStockInfo.jsp?ex_ch=${encodeURIComponent(channels)}&json=1&delay=0&_=${Date.now()}`;
+  const r=await fetch(url,{cache:'no-store'}); if(!r.ok)throw new Error('http '+r.status); const data=await r.json(); if(!data.msgArray?.length)throw new Error('empty');
+  const next={}; let liveMarket=null;
+  for(const q of data.msgArray){
+    const code=q.c; let price=cleanPrice(q.z); const prev=cleanPrice(q.y); if(!Number.isFinite(price)){ const a=cleanPrice(q.a?.split('_')[0]); const b=cleanPrice(q.b?.split('_')[0]); price=Number.isFinite(a)&&Number.isFinite(b)?(a+b)/2:(Number.isFinite(prev)?prev:NaN); }
+    if(code==='t00' || q.ch?.includes('t00')){ if(Number.isFinite(price)&&Number.isFinite(prev)) liveMarket={price,prev,source:'live'}; }
+    else if(code && Number.isFinite(price)){ next[code]={price,prev:Number.isFinite(prev)?prev:price,name:q.n||code,source:'live'}; }
+  }
+  if(!Object.keys(next).length)throw new Error('no stock quotes'); quotes=next; if(liveMarket) market=liveMarket; return true;
+}
+function useDemo(){
+  const next={}; holdings.forEach((h,i)=>{const base=h.demoPrice||h.avgCost*(1.04+(i*.015)); const prev=h.demoPrev||base*(1-(i%2?-.004:.006)); next[h.code]={price:base,prev,name:h.name,source:'demo'}}); quotes=next; market={price:23845.31,prev:23690.12,source:'demo'};
+}
+async function refreshQuotes(){
+  $('statusText').textContent='更新中…'; $('statusDot').className='dot';
+  let live=false; try{live=await fetchTwse()}catch(e){useDemo()}
+  const now=new Date(); $('updateClock').textContent=now.toLocaleTimeString('zh-TW',{hour12:false}); $('statusText').textContent=live?'免費盤中行情':'展示資料（行情來源未連線）'; $('statusDot').className='dot '+(live?'live':'demo'); render(); left=REFRESH_SECONDS;
+}
+function render(){
+  let cost=0,value=0,dayBase=0; const rows=[];
+  holdings.forEach(h=>{const q=quotes[h.code]||{price:h.avgCost,prev:h.avgCost}; const c=h.shares*h.avgCost,v=h.shares*q.price,pnl=v-c,ret=c?pnl/c*100:0,chg=q.prev?(q.price-q.prev)/q.prev*100:0; cost+=c; value+=v; dayBase+=h.shares*q.prev;
+    rows.push(`<tr><td><div class="stock"><div class="ticker">${h.code}</div><div class="stock-name"><b>${h.name}</b><small>${h.exchange==='otc'?'上櫃':'上市'}</small></div></div></td><td>${num(h.shares)}</td><td>${num(h.avgCost)}</td><td><b>${num(q.price)}</b></td><td class="${cls(chg)}"><b>${pct(chg)}</b></td><td>${money(v)}</td><td class="${cls(pnl)}"><b>${pnl>=0?'+':''}${money(pnl).replace('NT$ ','NT$ ')}</b></td><td class="${cls(ret)}"><b>${pct(ret)}</b></td></tr>`)
+  });
+  const pnl=value-cost, ret=cost?pnl/cost*100:0, dayPnl=value-dayBase, dayRet=dayBase?dayPnl/dayBase*100:0, mRet=market.prev?(market.price-market.prev)/market.prev*100:0, vs=dayRet-mRet;
+  $('totalValue').textContent=money(value); $('totalCost').textContent=money(cost); $('totalPnL').textContent=(pnl>=0?'+':'')+money(pnl); $('totalPnL').className=cls(pnl); $('totalReturn').textContent=pct(ret); $('totalReturn').className=cls(ret);
+  $('marketValue').textContent=num(market.price); $('marketChange').textContent=pct(mRet); $('marketChange').className=cls(mRet); $('marketReturn').textContent=pct(mRet); $('marketReturn').className='v '+cls(mRet);
+  $('dayPnL').textContent=(dayPnl>=0?'+':'')+money(dayPnl); $('dayPnL').className='v '+cls(dayPnl); $('dayReturn').textContent=pct(dayRet); $('dayReturn').className='v '+cls(dayRet); $('stockCount').textContent=holdings.length+' 檔'; $('holdingRows').innerHTML=rows.join('')||'<tr><td colspan="8" style="text-align:center;color:#667085">尚未新增持股</td></tr>';
+  const badge=$('vsBadge'); badge.textContent=vs>=0?`🏆 今天跑贏大盤 ${Math.abs(vs).toFixed(2)}%`:`今天落後大盤 ${Math.abs(vs).toFixed(2)}%`; badge.className='badge '+(vs>=0?'win':'lose');
+  $('lesson').textContent= vs>=0 ? `今天你的持股績效是 ${pct(dayRet)}，大盤是 ${pct(mRet)}。跑贏大盤不代表每天都要追高，長期穩定才是重點。` : `今天你的持股績效是 ${pct(dayRet)}，大盤是 ${pct(mRet)}。短期落後很正常，可以觀察持股是否符合原本的長期理由。`;
+}
+function renderEditor(){ $('portfolioList').innerHTML=holdings.map((h,i)=>`<div class="edit-row"><div><b>${h.code} ${h.name}</b><br><small>${num(h.shares)} 股・成本 ${num(h.avgCost)}・${h.exchange==='otc'?'上櫃':'上市'}</small></div><button class="btn danger" data-del="${i}">刪除</button></div>`).join('')||'<p style="color:#667085">尚無持股</p>'; document.querySelectorAll('[data-del]').forEach(b=>b.addEventListener('click',()=>{holdings.splice(Number(b.dataset.del),1);save()})); }
+$('editBtn').addEventListener('click',()=>{renderEditor();$('portfolioDialog').showModal()}); $('closeDialog').addEventListener('click',()=>$('portfolioDialog').close()); $('refreshBtn').addEventListener('click',refreshQuotes);
+$('addHolding').addEventListener('click',()=>{const code=$('code').value.trim(),name=$('name').value.trim()||code,shares=Number($('shares').value),avgCost=Number($('avgCost').value),exchange=$('exchange').value;if(!/^\d{4,6}$/.test(code)||shares<=0||avgCost<=0){alert('請確認股票代號、股數與平均成本。');return}holdings.push({code,name,shares,avgCost,exchange});['code','name','shares','avgCost'].forEach(id=>$(id).value='');save()});
+$('resetDemo').addEventListener('click',()=>{holdings=JSON.parse(JSON.stringify(demoHoldings));save()});
+setInterval(()=>{left--;if(left<=0)refreshQuotes();$('countdown').textContent=`${Math.max(left,0)} 秒後更新`},1000);
+renderEditor(); useDemo(); render(); refreshQuotes();
+</script>
+</body>
+</html>
