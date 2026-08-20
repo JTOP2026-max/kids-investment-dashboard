@@ -1,0 +1,16 @@
+{
+  "name": "我的投資小金庫",
+  "short_name": "投資小金庫",
+  "description": "給孩子使用的台股資產與投資學習小工具，不提供下單功能。",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#f7f9fc",
+  "theme_color": "#1266f1",
+  "lang": "zh-Hant-TW",
+  "categories": ["finance", "education"],
+  "icons": [
+    {"src":"/icon.svg","sizes":"any","type":"image/svg+xml","purpose":"any maskable"}
+  ]
+}
