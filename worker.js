@@ -23,12 +23,50 @@ function firstLevel(v) {
   return clean(String(v || "").split("_")[0]);
 }
 
+const PRIORITY_COLUMNS_SCRIPT = `<script>
+(() => {
+  const order = [0,8,9,10,11,12,1,2,3,4,5,6,7];
+  const reorder = (row) => {
+    if (!row || row.dataset.kidOrder === '1' || row.children.length !== 13) return;
+    const cells = Array.from(row.children);
+    order.forEach(i => row.appendChild(cells[i]));
+    row.dataset.kidOrder = '1';
+  };
+  const apply = () => {
+    const table = document.querySelector('.table-wrap table');
+    if (!table) return;
+    reorder(table.querySelector('thead tr'));
+    table.querySelectorAll('tbody tr').forEach(reorder);
+  };
+  const start = () => {
+    apply();
+    const body = document.getElementById('rows');
+    if (body) new MutationObserver(apply).observe(body, {childList:true});
+  };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start);
+  else start();
+})();
+</script>`;
+
+class BodyInjector {
+  element(element) {
+    element.append(PRIORITY_COLUMNS_SCRIPT, { html: true });
+  }
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
 
     if (url.pathname !== "/api/quotes") {
-      if (env?.ASSETS) return env.ASSETS.fetch(request);
+      if (env?.ASSETS) {
+        const response = await env.ASSETS.fetch(request);
+        const type = response.headers.get("content-type") || "";
+        if (type.includes("text/html")) {
+          return new HTMLRewriter().on("body", new BodyInjector()).transform(response);
+        }
+        return response;
+      }
       return errorResponse("Not found", 404);
     }
 
@@ -48,7 +86,6 @@ export default {
     }
 
     try {
-      // TWSE MIS is more reliable when a session cookie is established first.
       let cookie = "";
       try {
         const warmup = await fetch("https://mis.twse.com.tw/stock/index.jsp", {
@@ -86,8 +123,6 @@ export default {
       const data = await upstream.json();
       const rows = Array.isArray(data.msgArray) ? data.msgArray : [];
 
-      // Make the response compatible with the current front-end.
-      // If last trade z is blank, use best bid/ask midpoint, then previous close.
       for (const q of rows) {
         let price = clean(q.z);
         const prev = clean(q.y);
