@@ -1,4 +1,8 @@
-name = "kids-investment-quotes"
-main = "cloudflare-worker.js"
+name = "kids-investment-dashboard"
+main = "_worker.js"
 compatibility_date = "2026-08-20"
 workers_dev = true
+
+[assets]
+directory = "."
+binding = "ASSETS"
